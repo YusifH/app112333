@@ -1,5 +1,8 @@
+import 'package:provider/provider.dart';
+
 import '../presentation/pages/login/login_page.dart';
 import 'package:flutter/material.dart';
+import '../providers/login_change_notifier.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,7 +16,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: const LoginPage(),
+      home: ChangeNotifierProvider<LoginChangeNotifier>(
+        create: (context) => LoginChangeNotifier(),
+        child: LoginPage(),
+      ),
     );
   }
 }
