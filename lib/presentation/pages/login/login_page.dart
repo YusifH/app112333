@@ -1,3 +1,4 @@
+import 'package:app1/presentation/pages/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../global/custom_button.dart';
@@ -21,16 +22,19 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     final loginNotifier = context.read<LoginChangeNotifier>();
     loginNotifier.addListener(() {
-      if(loginNotifier.isFail){
+      if (loginNotifier.isFail) {
         showDialog(
             context: context,
-            builder: (context){
-          return const AlertDialog(
-            title: Text('ERROR'),
-            content: Text('Giris Ugursuz oldu'),
-          );
-        });
-      };
+            builder: (context) {
+              return const AlertDialog(
+                title: Text('ERROR'),
+                content: Text('Giris Ugursuz oldu'),
+              );
+            });
+      } else if (loginNotifier.isSuccess) {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const HomePage()));
+      }
     });
   }
 
@@ -73,20 +77,21 @@ class _LoginPageState extends State<LoginPage> {
               height: 20.0,
             ),
             Consumer<LoginChangeNotifier>(
-                builder: (context, loginNotifier, child){
-                  if(loginNotifier.inProgress){
-                    return const CircularProgressIndicator();
-                  }
-                  return CustomButton(
-                    title: 'LOGIN',
-                    color: Colors.purple,
-                    onTap: () {
-                      context
-                          .read<LoginChangeNotifier>()
-                          .login(username.text, password.text);
-                    },
-                  );
-                },),
+              builder: (context, loginNotifier, child) {
+                if (loginNotifier.inProgress) {
+                  return const CircularProgressIndicator();
+                }
+                return CustomButton(
+                  title: 'LOGIN',
+                  color: Colors.purple,
+                  onTap: () {
+                    context
+                        .read<LoginChangeNotifier>()
+                        .login(username.text, password.text);
+                  },
+                );
+              },
+            ),
           ],
         ),
       ),
