@@ -5,7 +5,7 @@ import '../../global/custom_button.dart';
 import '../../../providers/login_change_notifier.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
             });
       } else if (loginNotifier.isSuccess) {
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const HomePage()));
+            .pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
       }
     });
   }
